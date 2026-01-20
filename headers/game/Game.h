@@ -55,15 +55,12 @@ Game::Game(int rows, int cols, char player)
       cols(cols),
       currentPlayer(player)
 {
-    // Sprawdzenie minimalnych rozmiarów planszy
     if (rows < 4 || cols < 4)
     {
-        cerr << "Warning: Minimum board size is 4x4. Setting to minimum." << std::endl;
         this->rows = max(4, rows);
         this->cols = max(4, cols);
     }
 
-    // Inicjalizacja planszy
     board.resize(this->rows, vector<char>(this->cols, ' '));
 }
 
@@ -135,10 +132,8 @@ int Game::getEval(char player) const
 {
     if (player == 'X')
         return evalX;
-    // return evaluate('X');
     if (player == 'O')
         return evalO;
-    // return evaluate('O');
     return 0;
 }
 

@@ -90,7 +90,6 @@ int AlphaBetaPlayer::chooseMove(const Game &game)
 
 int AlphaBetaPlayer::minimax(Game &game, int depth, bool myTurn, char myChar, int alpha, int beta)
 {
-    // printf("\nLOG MINIMAX FUNCTION():");
     addNodesVisited();
     char opponent = (myChar == 'X') ? 'O' : 'X';
 
@@ -111,7 +110,7 @@ int AlphaBetaPlayer::minimax(Game &game, int depth, bool myTurn, char myChar, in
             game.undoMove();
 
             maxEvalScore = max(maxEvalScore, evalScore);
-            alpha = max(alpha, maxEvalScore);
+            alpha = max(alpha, evalScore);
 
             if (beta <= alpha)
             {
@@ -131,7 +130,7 @@ int AlphaBetaPlayer::minimax(Game &game, int depth, bool myTurn, char myChar, in
             game.undoMove();
 
             minEvalScore = min(minEvalScore, evalScore);
-            beta = min(beta, minEvalScore);
+            beta = min(beta, evalScore);
 
             if (beta <= alpha)
             {

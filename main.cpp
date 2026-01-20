@@ -23,12 +23,12 @@ int main()
     // manager.setPlayer2AI(make_unique<MinimaxPlayer>(3));
     // manager.playSingleGame();
 
-    // manager.setPlayer2AI(make_unique<AlphaBetaPlayer>(7));
-    // manager.playSingleGame();
+    manager.setPlayer2AI(make_unique<AlphaBetaPlayer>(7));
+    manager.playSingleGame();
 
-    manager.setBothAI(make_unique<GreedyPlayer>(),
-                      make_unique<MinimaxPlayer>(8));
-    manager.playMultipleGames(1);
+    // manager.setBothAI(make_unique<GreedyPlayer>(),
+    //                   make_unique<MinimaxPlayer>(9));
+    // manager.playMultipleGames(1);
 
     // manager.setBothAI(make_unique<MinimaxPlayer>(3),
     //                   make_unique<AlphaBetaPlayer>(3));

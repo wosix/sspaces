@@ -76,8 +76,6 @@ vector<int> ConnectFour::getValidMoves() const
 
 bool ConnectFour::makeMove(int column)
 {
-    // printf("\nLOG: makeMove():");
-
     if (column < 1 || column > getCols())
     {
         printf("Nieprawidłowy numer kolumny! Wybierz od 1 do %d.", getCols());
@@ -124,9 +122,7 @@ bool ConnectFour::assumeMove(int column, char player)
     {
         if (board[row][colIndex] == ' ')
         {
-            // board[row][colIndex] = player;
             addMove(Move{row, colIndex, player});
-
             return true;
         }
     }
@@ -229,24 +225,15 @@ int ConnectFour::evaluate(char player) const
 
 bool ConnectFour::canWinNextMove(char player) const
 {
-    // printf("\nLOG: canWinNextMove(%c):\n", player);
-    // Sprawdź wszystkie możliwe ruchy
     auto moves = getValidMoves();
 
     auto gameCopy = clone();
     for (int move : moves)
     {
-        // printf("\n sprawdzanie czy %c wygra po ruchu %d", player, move);
-        // Stwórz kopię
-
-        //     // Wykonaj ruch
         if (gameCopy->assumeMove(move, player))
         {
-            // printf("\nruch %d przez %c jest poprawny", move, player);
-            // Sprawdź czy ten ruch daje wygraną
             if (gameCopy->checkWin(player))
             {
-                // printf("\n%c wygra po ruchu %d", player, move);
                 return true;
             }
             gameCopy->undoMove();
@@ -261,12 +248,12 @@ int ConnectFour::countOpenThrees(char player) const
 {
     int count = 0;
 
-    // horizontal (→) - 4 wzory: XXX_, XX_X, X_XX, _XXX
+    // horizontal
     for (int r = 0; r < rows; ++r)
     {
         for (int c = 0; c < cols - 3; ++c)
         {
-            // Wzór 1: XXX _
+            // XXX _
             if (board[r][c] == player &&
                 board[r][c + 1] == player &&
                 board[r][c + 2] == player &&
@@ -274,7 +261,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór 2: XX _ X
+            // XX _ X
             if (board[r][c] == player &&
                 board[r][c + 1] == player &&
                 board[r][c + 2] == ' ' &&
@@ -282,7 +269,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór 3: X _ XX
+            // X _ XX
             if (board[r][c] == player &&
                 board[r][c + 1] == ' ' &&
                 board[r][c + 2] == player &&
@@ -290,7 +277,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór 4: _ XXX
+            // _ XXX
             if (board[r][c] == ' ' &&
                 board[r][c + 1] == player &&
                 board[r][c + 2] == player &&
@@ -301,7 +288,7 @@ int ConnectFour::countOpenThrees(char player) const
         }
     }
 
-    // vertical (↓) - tylko XXX_ (bo grawitacja)
+    // vertical - XXX_
     for (int r = 0; r < rows - 3; ++r)
     {
         for (int c = 0; c < cols; ++c)
@@ -316,12 +303,12 @@ int ConnectFour::countOpenThrees(char player) const
         }
     }
 
-    // diag down-right (↘)
+    // diag down-right
     for (int r = 0; r < rows - 3; ++r)
     {
         for (int c = 0; c < cols - 3; ++c)
         {
-            // Wzór: XXX _
+            // XXX _
             if (board[r][c] == player &&
                 board[r + 1][c + 1] == player &&
                 board[r + 2][c + 2] == player &&
@@ -329,7 +316,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór: XX _ X
+            // XX _ X
             if (board[r][c] == player &&
                 board[r + 1][c + 1] == player &&
                 board[r + 2][c + 2] == ' ' &&
@@ -337,7 +324,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór: X _ XX
+            // X _ XX
             if (board[r][c] == player &&
                 board[r + 1][c + 1] == ' ' &&
                 board[r + 2][c + 2] == player &&
@@ -345,7 +332,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór: _ XXX
+            // _ XXX
             if (board[r][c] == ' ' &&
                 board[r + 1][c + 1] == player &&
                 board[r + 2][c + 2] == player &&
@@ -356,12 +343,12 @@ int ConnectFour::countOpenThrees(char player) const
         }
     }
 
-    // diag up-right (↗)
+    // diag up-right
     for (int r = 3; r < rows; ++r)
     {
         for (int c = 0; c < cols - 3; ++c)
         {
-            // Wzór: XXX _
+            // XXX _
             if (board[r][c] == player &&
                 board[r - 1][c + 1] == player &&
                 board[r - 2][c + 2] == player &&
@@ -369,7 +356,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór: XX _ X
+            // XX _ X
             if (board[r][c] == player &&
                 board[r - 1][c + 1] == player &&
                 board[r - 2][c + 2] == ' ' &&
@@ -377,7 +364,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór: X _ XX
+            // X _ XX
             if (board[r][c] == player &&
                 board[r - 1][c + 1] == ' ' &&
                 board[r - 2][c + 2] == player &&
@@ -385,7 +372,7 @@ int ConnectFour::countOpenThrees(char player) const
             {
                 count++;
             }
-            // Wzór: _ XXX
+            // _ XXX
             if (board[r][c] == ' ' &&
                 board[r - 1][c + 1] == player &&
                 board[r - 2][c + 2] == player &&
@@ -402,11 +389,11 @@ int ConnectFour::countOpenThrees(char player) const
 int ConnectFour::countOpenTwos(char player) const
 {
     int count = 0;
-    // horizontal (→) - 4 wzory: XX__, _XX_, __XX, X_X_
+    // horizontal
     for (int r = 0; r < rows; ++r)
         for (int c = 0; c < cols - 3; ++c)
         {
-            // Wzór 1: XX _ _
+            // XX _ _
             if (board[r][c] == player &&
                 board[r][c + 1] == player &&
                 board[r][c + 2] == ' ' &&
@@ -414,7 +401,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór 2: _ XX _
+            // _ XX _
             if (board[r][c] == ' ' &&
                 board[r][c + 1] == player &&
                 board[r][c + 2] == player &&
@@ -422,7 +409,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór 3: _ _ XX
+            // _ _ XX
             if (board[r][c] == ' ' &&
                 board[r][c + 1] == ' ' &&
                 board[r][c + 2] == player &&
@@ -430,7 +417,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór 4: X _ X _
+            // X _ X _
             if (board[r][c] == player &&
                 board[r][c + 1] == ' ' &&
                 board[r][c + 2] == player &&
@@ -438,7 +425,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór 5: X _ _ X (też ważne!)
+            // X _ _ X
             if (board[r][c] == player &&
                 board[r][c + 1] == ' ' &&
                 board[r][c + 2] == ' ' &&
@@ -448,7 +435,7 @@ int ConnectFour::countOpenTwos(char player) const
             }
         }
 
-    // vertical (↓) - tylko XX__ (bo grawitacja)
+    // vertical - XX__
     for (int r = 0; r < rows - 3; ++r)
         for (int c = 0; c < cols; ++c)
             if (board[r][c] == player &&
@@ -457,11 +444,11 @@ int ConnectFour::countOpenTwos(char player) const
                 board[r + 3][c] == ' ')
                 count++;
 
-    // diag down-right (↘)
+    // diag down-right
     for (int r = 0; r < rows - 3; ++r)
         for (int c = 0; c < cols - 3; ++c)
         {
-            // Wzór: XX _ _
+            // XX _ _
             if (board[r][c] == player &&
                 board[r + 1][c + 1] == player &&
                 board[r + 2][c + 2] == ' ' &&
@@ -469,7 +456,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór: _ XX _
+            // _ XX _
             if (board[r][c] == ' ' &&
                 board[r + 1][c + 1] == player &&
                 board[r + 2][c + 2] == player &&
@@ -477,7 +464,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór: _ _ XX
+            // _ _ XX
             if (board[r][c] == ' ' &&
                 board[r + 1][c + 1] == ' ' &&
                 board[r + 2][c + 2] == player &&
@@ -487,11 +474,11 @@ int ConnectFour::countOpenTwos(char player) const
             }
         }
 
-    // diag up-right (↗)
+    // diag up-right
     for (int r = 3; r < rows; ++r)
         for (int c = 0; c < cols - 3; ++c)
         {
-            // Wzór: XX _ _
+            // XX _ _
             if (board[r][c] == player &&
                 board[r - 1][c + 1] == player &&
                 board[r - 2][c + 2] == ' ' &&
@@ -499,7 +486,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór: _ XX _
+            // _ XX _
             if (board[r][c] == ' ' &&
                 board[r - 1][c + 1] == player &&
                 board[r - 2][c + 2] == player &&
@@ -507,7 +494,7 @@ int ConnectFour::countOpenTwos(char player) const
             {
                 count++;
             }
-            // Wzór: _ _ XX
+            // _ _ XX
             if (board[r][c] == ' ' &&
                 board[r - 1][c + 1] == ' ' &&
                 board[r - 2][c + 2] == player &&

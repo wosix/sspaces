@@ -44,8 +44,6 @@ int GreedyPlayer::chooseMove(const Game &game)
 
     for (int move : validMoves)
     {
-        // printf("\nLOG: greedy player zastanawia sie nad ruchem %d", move);
-
         if (!gameCopy->makeMove(move))
         {
             continue;
@@ -54,8 +52,6 @@ int GreedyPlayer::chooseMove(const Game &game)
         int eval = gameCopy->getEval(currentPlayer);
         int evalOpp = gameCopy->getEval(opponent);
         int evalDiff = eval - evalOpp;
-
-        // printf("\nLOG: eval diff po ruchu %d: %d", move, evalDiff);
 
         if (evalDiff > bestEvalDif)
         {
@@ -70,13 +66,6 @@ int GreedyPlayer::chooseMove(const Game &game)
         addNodesVisited();
         gameCopy->undoMove();
     }
-
-    // int num = possibleMoves.size();
-    // printf("\n moje %d mozliwe ruchy:", num);
-    // for (int move : possibleMoves)
-    // {
-    //     printf("\n %d", move);
-    // }
 
     int chosenMove = getRandomMove();
 

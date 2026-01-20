@@ -83,7 +83,6 @@ int MinimaxPlayer::chooseMove(const Game &game)
 
 int MinimaxPlayer::minimax(Game &game, int depth, bool myTurn, char myChar)
 {
-    // printf("\nLOG MINIMAX FUNCTION():");
     char opponent = (myChar == 'X') ? 'O' : 'X';
     addNodesVisited();
 

@@ -93,7 +93,6 @@ void GameManager::playMultipleGames(int numGames)
     printf("\n=== ROZPOCZYNAM %d GIER ===", numGames);
     for (int i = 1; i <= numGames; i++)
     {
-        // resetGame();
         printf("\n=== ROZPOCZYNAM %d GRE ===", i);
 
         while (true)
